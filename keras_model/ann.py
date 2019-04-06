@@ -23,7 +23,7 @@ dataset = dataset.drop(columns=['date', 'sent_time'])
 
 dataset = dataset.drop(
     columns=['cli_zip', 'pat_id', 'family_id', 'send_time', 'ReminderId'])
-print(dataset.columns)
+dataset['clinic'] = dataset['clinic'].astype(str)
 
 for column in dataset:
     if is_string_dtype(dataset[column]):
