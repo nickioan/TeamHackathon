@@ -76,7 +76,7 @@ classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 # Fitting the ANN to the Training set
-classifier.fit(X_train, y_train, batch_size = 10, nb_epoch = 30)
+classifier.fit(X_train, y_train, batch_size = 10, nb_epoch = 15)
 
 # Part 3 - Making the predictions and evaluating the model
 
@@ -88,3 +88,13 @@ y_pred = (y_pred > 0.95)
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
+
+
+#saving model
+#serialize model to JSON
+model_json = classifier.to_json()
+with open("models/feed_forward/model.json", "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+classifier.save_weights("models/feed_forward/model.h5")
+print("Saved model to disk")

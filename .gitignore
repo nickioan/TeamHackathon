@@ -1,1 +1,4 @@
 data/*
+models/*
+#keep directory if .gitkeep
+!*/.gitkeep

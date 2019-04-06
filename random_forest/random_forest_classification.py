@@ -46,4 +46,10 @@ y_pred = classifier.predict(X_test)
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
+print(y_pred)
 print(cm)
+
+#saving model
+import pickle
+with open('models/random_forest/model.pkl', 'wb') as f:
+    pickle.dump(classifier, f)
