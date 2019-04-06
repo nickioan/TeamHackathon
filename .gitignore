@@ -1,4 +1,6 @@
 data/*
 models/*
+models/feed_forward/*
+models/random_forest/*
 #keep directory if .gitkeep
 !*/.gitkeep
