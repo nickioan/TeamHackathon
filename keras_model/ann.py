@@ -20,8 +20,14 @@ import pandas as pd
 dataset = pd.read_csv('data/train.csv')
 dataset = dataset.dropna()
 
-X = dataset.iloc[:, 2:18].values
+X = dataset.iloc[:, 2:21].values
 y = dataset.iloc[:, 1].values
+X = X[0:10000]
+y = y[0:10000]
+
+X = np.take(X, [0, 4, 5, 10, 11, 14, 15, 16, 17, 18], axis=1)
+
+
 
 # Encoding categorical data
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
@@ -58,7 +64,7 @@ from keras.layers import Dense
 classifier = Sequential()
 
 # Adding the input layer and the first hidden layer
-classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu', input_dim = 11))
+classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu', input_dim = 7950))
 
 # Adding the second hidden layer
 classifier.add(Dense(output_dim = 6, init = 'uniform', activation = 'relu'))
@@ -70,7 +76,7 @@ classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 # Fitting the ANN to the Training set
-classifier.fit(X_train, y_train, batch_size = 10, nb_epoch = 100)
+classifier.fit(X_train, y_train, batch_size = 10, nb_epoch = 30)
 
 # Part 3 - Making the predictions and evaluating the model
 
@@ -81,3 +87,4 @@ y_pred = (y_pred > 0.5)
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
+print(cm)
