@@ -18,31 +18,22 @@ import pandas as pd
 
 # Importing the dataset
 dataset = pd.read_csv('data/train.csv')
+dataset = dataset.dropna()
+
 X = dataset.iloc[:, 2:18].values
 y = dataset.iloc[:, 1].values
 
-#remove nan values rows
-for i, row in enumerate(X):
-    if not isinstance(row[0], str):
-        print(X[i-10:i+10])
-        np.delete(X, (i+1), axis=0)
-        print(X[i-10:i+10])
-for i, row in enumerate(X):
-    if not isinstance(row[0], str):
-        np.delete(X, (i-1), axis=0)
-
-
 # Encoding categorical data
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-for i in range(0, 15):
+for i in range(0, len(X[0])):
     if isinstance(X[0][i], str):
         labelencoder_X = LabelEncoder()
         X[:, i] = labelencoder_X.fit_transform(X[:, i])
 
-onehotencoder = OneHotEncoder(categorical_features = [1])
+onehotencoder = OneHotEncoder(categories='auto')
 X = onehotencoder.fit_transform(X).toarray()
-X = X[:, 1:]
 
+print("Finished Data processing")
 # Splitting the dataset into the Training set and Test set
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
@@ -51,6 +42,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
+print("starting X_text")
 X_test = sc.transform(X_test)
 
 
